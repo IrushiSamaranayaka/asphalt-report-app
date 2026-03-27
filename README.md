@@ -19,6 +19,17 @@ A web-based system developed to manage and track daily production activities in 
 🎯 Purpose
 This project was developed to improve efficiency in construction site data management by replacing manual processes with an automated system.
 
+📸 Screenshots
+
+ 🖥️ Main Interface
+[Main UI](main-ui.png)
+
+ 📊 Generated Results
+[Results](result-view.png)
+
+🧮 Calculations Section
+[Calculations](calculation.png)
+
  🚀 Future Improvements
 
 - 📥 Export reports as PDF  
