@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ACCESS ENGINEERING - Daily Production Calculator</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<div class="header-box">
+
+<img src="logo.png.png" class="logo">
+
+
+
+<p class="subtitle">Daily Production Calculator</p>
+
+</div>
+
+<hr class="header-line">
+
+
+<div class="top-fields">
+
+<div>
+<label>Date</label>
+<input type="date" id="reportDate">
+</div>
+
+<div>
+<label>Site</label>
+<input type="text" id="siteName" placeholder="Enter site name">
+</div>
+
+</div>
+
+
+
+<div class="table-box">
+
+<table id="reportTable">
+
+<thead>
+
+<tr>
+
+<th>Plant Start</th>
+<th>Batching Start</th>
+<th>Batching Stop</th>
+<th>Plant Stop</th>
+<th>Effective Hrs</th>
+<th>Idling Hrs</th>
+<th>Running Hrs</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="tableBody">
+
+<tr>
+
+<td><input type="time" class="plantStart"></td>
+
+<td><input type="time" class="batchingStart"></td>
+
+<td><input type="time" class="batchingStop"></td>
+
+<td><input type="time" class="plantStop"></td>
+
+<td><input type="text" class="effectiveHrs" readonly></td>
+
+<td><input type="text" class="idlingHrs" readonly></td>
+
+<td><input type="text" class="runningHrs" readonly></td>
+
+<td>
+<button class="delete-btn" onclick="deleteRow(this)">Delete</button>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+
+<div class="button-group">
+
+<button onclick="addRow()">Add Row</button>
+
+<button onclick="calculateAllRows()">Calculate All</button>
+
+
+
+</div>
+
+
+
+<div class="totals-box">
+
+<h2>Totals</h2>
+
+<p><strong>Total Effective Hrs:</strong> <span id="totalEffective">00:00</span></p>
+
+<p><strong>Total Idling Hrs:</strong> <span id="totalIdling">00:00</span></p>
+
+<p><strong>Total Running Hrs:</strong> <span id="totalRunning">00:00</span></p>
+
+</div>
+
+
+
+<!-- Production Summary -->
+
+<div class="production-box">
+
+<h2>Production Summary</h2>
+
+<div class="production-grid">
+
+<div>
+<label>MT</label>
+<input type="number" id="mtValue" placeholder="Enter MT">
+</div>
+
+<div>
+<label>Effective Hrs</label>
+<input type="text" id="productionEffectiveHrs" placeholder="Example: 04.36">
+</div>
+
+<div>
+<label>TPH</label>
+<input type="text" id="tphValue" readonly>
+</div>
+
+<div>
+<label>Fuel Liters</label>
+<input type="number" id="fuelLiters" placeholder="Enter fuel liters">
+</div>
+
+<div>
+<label>Fuel Consumption</label>
+<input type="text" id="fuelConsumption" readonly>
+</div>
+
+</div>
+
+
+<div class="button-group production-button-group">
+
+<button onclick="calculateProduction()">Calculate Production</button>
+
+</div>
+
+</div>
+
+
+
+<!-- Generator 550 -->
+
+<div class="generator-box">
+
+<h2>Generator Running Details (550 KVA)</h2>
+
+<div class="generator-grid">
+
+<div>
+<label>Start Meter</label>
+<input type="number" id="genStart">
+</div>
+
+<div>
+<label>Stop Meter</label>
+<input type="number" id="genStop">
+</div>
+
+<div>
+<label>Running Hrs</label>
+<input type="text" id="genRunning" readonly>
+</div>
+
+<div>
+<label>Fuel Liters</label>
+<input type="number" id="genFuel">
+</div>
+
+<div>
+<label>Fuel Consumption</label>
+<input type="text" id="genConsumption" readonly>
+</div>
+
+</div>
+
+
+<div class="button-group">
+
+<button onclick="calculateGenerator()">Calculate Generator</button>
+
+</div>
+
+</div>
+
+
+
+<!-- Generator 80 -->
+
+<div class="generator-box">
+
+<h2>Generator Running Details (80 KVA)</h2>
+
+<div class="generator-grid">
+
+<div>
+<label>Start Meter</label>
+<input type="number" id="gen80Start">
+</div>
+
+<div>
+<label>Stop Meter</label>
+<input type="number" id="gen80Stop">
+</div>
+
+<div>
+<label>Running Hrs</label>
+<input type="text" id="gen80Running" readonly>
+</div>
+
+<div>
+<label>Fuel Liters</label>
+<input type="number" id="gen80Fuel">
+</div>
+
+<div>
+<label>Fuel Consumption</label>
+<input type="text" id="gen80Consumption" readonly>
+</div>
+
+</div>
+
+
+<div class="button-group">
+
+<button onclick="calculateGenerator80()">Calculate Generator (80 KVA)</button>
+
+</div>
+
+</div>
+
+
+
+<!-- Bitumen Heating Details -->
+
+<div class="generator-box">
+
+<h2>Bitumen Heating Details</h2>
+
+<div class="table-box">
+
+<table id="bitumenTable">
+
+<thead>
+
+<tr>
+
+<th>Start Time</th>
+<th>Stop Time</th>
+<th>Running Hrs</th>
+<th>Fuel Liters</th>
+<th>Fuel Consumption</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="bitumenBody">
+
+<tr>
+
+<td><input type="time" class="bitStart"></td>
+
+<td><input type="time" class="bitStop"></td>
+
+<td><input type="text" class="bitRunning" readonly></td>
+
+<td><input type="number" class="bitFuel"></td>
+
+<td><input type="text" class="bitConsumption" readonly></td>
+
+<td>
+
+<button class="delete-btn" onclick="deleteBitumenRow(this)">
+Delete
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+
+
+
+<div class="button-group">
+
+<button onclick="addBitumenRow()">Add Row</button>
+<button class="calc-btn">Calculate</button>
+<button class="print-btn" onclick="printReport()">Print Report</button>
+<button class="pdf-btn" onclick="downloadPDF()">Download PDF</button>
+
+</div>
+
+
+
+<div class="totals-box">
+
+<p><strong>Total Running Hrs:</strong> <span id="bitTotalRunning">00:00</span></p>
+
+<p><strong>Total Fuel Liters:</strong> <span id="bitTotalFuel">0</span></p>
+
+<p><strong>Overall Fuel Consumption:</strong> <span id="bitOverallConsumption">0</span></p>
+
+</div>
+
+</div>
+
+
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script src="script.js"></script>
+
+
+<div class="footer">
+  © 2026 Irushi Samaranayaka | Smart Construction Tool
+</div>
+
+
+</body> 
+</html>
